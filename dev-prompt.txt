@@ -1,0 +1,50 @@
+DeepShield AI — Developer Prompt
+=================================
+
+PROJECT GOAL
+------------
+Build a production-ready deepfake detection web app using Next.js 15 + HuggingFace Inference API.
+
+TECH STACK
+----------
+- Next.js 15 (App Router)
+- TypeScript (strict mode)
+- Tailwind CSS
+- HuggingFace Inference API (REST)
+
+KEY API ROUTE: /api/detect
+--------------------------
+- Accepts multipart/form-data with `file` (image or audio) and optional `type` field
+- Validates MIME type — rejects non-image/audio with HTTP 400
+- Calls primary HF model: dima806/deepfake_vs_real_image_detection
+  - Retries 3 times with exponential backoff (500ms, 1000ms, 2000ms)
+- Falls back to: haywoodsloan/ai-image-detector-deploy
+- Last resort: deterministic heuristic returning Suspicious/60%
+
+RESPONSE SCHEMA
+---------------
+{
+  result: "Fake" | "Real" | "Suspicious"
+  confidence: number (0–100)
+  explanation: string[]
+  source: "primary-api" | "fallback-hf" | "fallback-heuristic"
+}
+
+UI COMPONENTS
+-------------
+- DropZone: drag & drop + click-to-browse, accepts image/* and audio/*
+- ResultCard: colour-coded (red/yellow/green), confidence bar, explanation list
+- LoadingSpinner: animated dots during analysis
+
+ENV VARS
+--------
+HF_API_KEY — HuggingFace Inference API Bearer token
+
+MODELS
+------
+Primary:  https://huggingface.co/dima806/deepfake_vs_real_image_detection
+Fallback: https://huggingface.co/haywoodsloan/ai-image-detector-deploy
+
+INSPIRATION
+-----------
+https://github.com/namandhakad712/Deepfake-detector
