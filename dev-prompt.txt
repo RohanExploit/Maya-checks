@@ -3,11 +3,11 @@ DeepShield AI — Developer Prompt
 
 PROJECT GOAL
 ------------
-Build a production-ready deepfake detection web app using Next.js 14 + HuggingFace Inference API.
+Build a production-ready deepfake detection web app using Next.js 15 + HuggingFace Inference API.
 
 TECH STACK
 ----------
-- Next.js 14 (App Router)
+- Next.js 15 (App Router)
 - TypeScript (strict mode)
 - Tailwind CSS
 - HuggingFace Inference API (REST)
